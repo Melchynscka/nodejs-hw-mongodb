@@ -9,7 +9,7 @@ const contactSchema = new Schema({
         type: String,
         required: true,
     },
-    email: String,
+    // email: String,
     isFavourite: {
         type: Boolean,
         required: true,
@@ -19,16 +19,17 @@ const contactSchema = new Schema({
         type: String,
         enum: ["work", "home", "personal"],
         required: true,
-    },
-    createdAt:{
-        type: String,
-        required: true,
-    },
-    updatedAt:{
-        type: String,
-        required: true,
     }
+    // createdAt:{
+    //     type: String,
+    //     required: true,
+    // },
+    // updatedAt:{
+    //     type: String,
+    //     required: true,
+    // }
 
 }, { versionKey: false, timestamps: true });
 
-export const ContactCollection = model("contact", contactSchema);
+const ContactCollection = model("contact", contactSchema);
+export default ContactCollection;
