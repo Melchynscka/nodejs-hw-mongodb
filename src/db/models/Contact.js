@@ -23,7 +23,12 @@ const contactSchema = new Schema({
         type: String,
         enum: contactType,
         required: true,
-    }
+    },
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'users',
+        required: true
+    },
     // createdAt:{
     //     type: String,
     //     required: true,
