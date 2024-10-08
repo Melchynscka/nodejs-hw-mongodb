@@ -29,14 +29,7 @@ const contactSchema = new Schema({
         ref: 'users',
         required: true
     },
-    // createdAt:{
-    //     type: String,
-    //     required: true,
-    // },
-    // updatedAt:{
-    //     type: String,
-    //     required: true,
-    // }
+  
 
 }, { versionKey: false, timestamps: true });
 

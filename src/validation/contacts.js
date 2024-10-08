@@ -8,7 +8,8 @@ export const contactAddSchema = Joi.object({
     }),
     contactType: Joi.string().required().valid(...contactType).default('personal').min(3).max(20),
     isFavourite: Joi.boolean(),
-    email: Joi.string()
+    email: Joi.string(),
+    
 });
 
 export const contactPatchSchema = Joi.object({
