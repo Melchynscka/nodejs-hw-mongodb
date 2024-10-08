@@ -3,13 +3,21 @@ import createHttpError from "http-errors";
 import parsePaginationParams from "../utils/parsePaginationParams.js";
 import parseSortParams from "../utils/parseSortParams.js";
 import { sortFields } from "../db/models/Contact.js";  
+import { parseFilterParams } from "../utils/parseFilterParams.js";
 
 export const getAllContactsController = async (req, res) => {
   const { perPage, page } = parsePaginationParams(req.query);
   const { sortBy, sortOrder } = parseSortParams({...req.query, sortFields});
+   const filter = parseFilterParams(req.query);
   const { _id: userId } = req.user;
 
-        const data = await contactServices.getAllContacts({ perPage, page, sortBy, sortOrder, userId });
+  const data = await contactServices.getAllContacts({
+    perPage,
+    page,
+    sortBy,
+    sortOrder,
+    filter: { ...filter, userId },
+  });
         res.json({
             status: 200,
             message: "Successfully found contacts!",
@@ -19,7 +27,7 @@ export const getAllContactsController = async (req, res) => {
 export const getContactByIdController = async (req, res) => {
         const { _id: userId } = req.user;
         const { contactId } = req.params;
-        const data = await contactServices.getContactById({_id:contactId, userId});
+        const data = await contactServices.getContact({_id:contactId, userId});
         
         if (!data) {
             throw createHttpError(404, `Contact with id=${contactId} not found`);
@@ -33,7 +41,7 @@ export const getContactByIdController = async (req, res) => {
     
 export const addContactController = async (req, res) => {
   const { _id: userId } = req.user;
-    const data = await contactServices.createContact(...req.body, userId);
+  const data = await contactServices.createContact({ ...req.body, userId });
     res.status(201).json({
         status: 201,
         message: " Contact add successfully",
