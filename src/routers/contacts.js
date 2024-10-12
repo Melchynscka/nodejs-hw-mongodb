@@ -3,7 +3,7 @@ import { getAllContactsController, getContactByIdController, addContactControlle
 import ctrlWrapper from "../utils/ctrlWrapper.js";
 import validateBody from "../utils/validateBody.js";
 import { contactAddSchema, contactPatchSchema } from "../validation/contacts.js";
-import {isValidId} from "../middlewares/isValid.js";
+import isValidId from "../middlewares/isValid.js";
 import { authenticate } from "../middlewares/authenticate.js";
 import { upload } from '../middlewares/multer.js';
 

@@ -6,7 +6,7 @@ import { SessionsCollection } from '../db/models/Session.js';
 import { FIFTEEN_MINUTES, ONE_DAY , SMTP, TEMPLATES_DIR} from '../constants/index.js';
 import jwt from 'jsonwebtoken';
 import { env } from '../utils/env.js';
-import { sendEmail } from '../utils/sendMail.js';
+import  {sendMail}  from '../utils/sendMail.js';
 import handlebars from 'handlebars';
 import path from 'node:path';
 import fs from 'node:fs/promises';
@@ -115,7 +115,7 @@ export const requestResetToken = async (email) => {
     link: `${env('APP_DOMAIN')}/reset-password?token=${resetToken}`,
   });
 
-  await sendEmail({
+  await sendMail({
     from: env(SMTP.SMTP_FROM),
     to: email,
     subject: 'Reset your password',
