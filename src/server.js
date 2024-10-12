@@ -2,16 +2,11 @@ import express from "express";
 import cors from "cors";
 import { env } from "./utils/env.js";
 import cookieParser from 'cookie-parser';
-import { UPLOAD_DIR } from './constants/index.js';
-
-// import authRouter from "./routers/auth.js";
-// import contactsRouter from "./routers/contacts.js";
 import router from './routers/index.js';
 import notFoundHandler from "./middlewares/notFoundHandler.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import logger from "../src/middlewares/logger.js";
-
-
+import { UPLOAD_DIR } from './constants/index.js';
 
 
 export const setupServer = () => {
