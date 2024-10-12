@@ -116,7 +116,7 @@ export const requestResetToken = async (email) => {
   });
 
   await sendEmail({
-    from: env(SMTP.FROM),
+    from: env(SMTP.SMTP_FROM),
     to: email,
     subject: 'Reset your password',
     html,
@@ -130,7 +130,7 @@ export const resetPassword = async (payload) => {
     entries = jwt.verify(payload.token, env('JWT_SECRET'));
   } catch (err) {
     if (err instanceof Error) throw createHttpError(401, err.message);
-    throw err;
+    return err;
   }
 
   const user = await UserCollection.findOne({
@@ -148,5 +148,4 @@ export const resetPassword = async (payload) => {
     { _id: user._id },
     { password: encryptedPassword },
   );
-  await SessionsCollection.deleteOne({ _id: user._id });
 };
