@@ -8,7 +8,7 @@ import errorHandler from "./middlewares/errorHandler.js";
 import logger from "../src/middlewares/logger.js";
 import { UPLOAD_DIR } from './constants/index.js';
 
-
+const port = Number(env("PORT", "3001"));
 export const setupServer = () => {
     const app = express();
     app.use(logger);
@@ -20,10 +20,12 @@ export const setupServer = () => {
     // app.use("/auth", authRouter);
     // app.use("/contacts", contactsRouter);
     app.use(router);
-    app.use(notFoundHandler);
+    app.use('*', notFoundHandler);
     app.use(errorHandler);
     
-    const port = Number(env("PORT", 3001));
+    
 
-    app.listen(port, () => console.log("Server is running on port 3001"));
+    app.listen(port, ()=> {
+        console.log(`Server is running on port ${port}`);
+    });
 }
