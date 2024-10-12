@@ -14,9 +14,9 @@ contactsRouter.get("/", ctrlWrapper(getAllContactsController));
 contactsRouter.post('/register', validateBody(contactAddSchema), ctrlWrapper(addContactController)),
 contactsRouter.get("/:contactId",isValidId, ctrlWrapper(getContactByIdController));
 contactsRouter.post("/", upload.single('photo'), validateBody(contactAddSchema), ctrlWrapper(addContactController));
-contactsRouter.put("/:contactId",upload.single('photo'), isValidId,validateBody(contactAddSchema), ctrlWrapper(upsertContactController));
-contactsRouter.patch("/:contactId", upload.single('photo'), isValidId, validateBody(contactPatchSchema), ctrlWrapper(patchContactController));
-contactsRouter.delete("/:contactId", isValidId, ctrlWrapper(deleteContactController));
+contactsRouter.put("/:contactId", isValidId,validateBody(contactAddSchema), ctrlWrapper(upsertContactController));
+contactsRouter.patch("/:contactId", isValidId, validateBody(contactPatchSchema), ctrlWrapper(patchContactController));
+contactsRouter.delete("/:contactId", isValidId, upload.single('photo'), ctrlWrapper(deleteContactController));
 
 
 export default contactsRouter;

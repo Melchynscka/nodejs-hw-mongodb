@@ -3,9 +3,8 @@ import bcrypt from 'bcrypt';
 import createHttpError from "http-errors";
 import { UserCollection } from "../db/models/User.js";
 import { SessionsCollection } from '../db/models/Session.js';
-import { FIFTEEN_MINUTES, ONE_DAY } from '../constants/index.js';
+import { FIFTEEN_MINUTES, ONE_DAY , SMTP, TEMPLATES_DIR} from '../constants/index.js';
 import jwt from 'jsonwebtoken';
-import { SMTP, TEMPLATES_DIR } from '../constants/index.js';
 import { env } from '../utils/env.js';
 import { sendEmail } from '../utils/sendMail.js';
 import handlebars from 'handlebars';
@@ -98,7 +97,7 @@ export const requestResetToken = async (email) => {
     },
     env('JWT_SECRET'),
     {
-      expiresIn: '15m',
+      expiresIn: '5m',
     },
   );
     const resetPasswordTemplatePath = path.join(
@@ -117,7 +116,7 @@ export const requestResetToken = async (email) => {
   });
 
   await sendEmail({
-    from: env(SMTP.SMTP_FROM),
+    from: env(SMTP.FROM),
     to: email,
     subject: 'Reset your password',
     html,
@@ -149,4 +148,5 @@ export const resetPassword = async (payload) => {
     { _id: user._id },
     { password: encryptedPassword },
   );
+  await SessionsCollection.deleteOne({ _id: user._id });
 };
