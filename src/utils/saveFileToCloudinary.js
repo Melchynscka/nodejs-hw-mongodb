@@ -1,23 +1,23 @@
 import cloudinary from 'cloudinary';
-import fs from 'node:fs/promises';
 import { env } from './env.js';
-import { CLOUDINARY } from '../constants/index.js';
+import { CLOUDINARY } from '../constans/index.js';
+import fs from 'node:fs/promises';
 
 cloudinary.v2.config({
-  secure: true,
-  cloud_name: env(CLOUDINARY.CLOUD_NAME),
-  api_key: env(CLOUDINARY.API_KEY),
-  api_secret: env(CLOUDINARY.API_SECRET),
+    secure: true,
+    cloud_name: env(CLOUDINARY.CLOUD_NAME),
+    api_key: env(CLOUDINARY.API_KEY),
+    api_secret: env(CLOUDINARY.API_SECRET),
 });
+console.log('Cloudinary Config:');
+console.log('Cloud Name:', env(CLOUDINARY.CLOUD_NAME));
+console.log('API Key:', env(CLOUDINARY.API_KEY));
+console.log('API Secret:', env(CLOUDINARY.API_SECRET));
 
-export const saveFileToCloud = async (file, folder) => {
-    const filename = file.filename.includes('.')
-        ? file.filename.substring(0, file.filename.lastIndexOf('.'))
-        : file.filename;
-    const response = await cloudinary.v2.uploader.upload(file.path, {
-        public_id: filename,
-        folder,
-    });
+export const saveFileToCloudinary = async(file)=>{
+    const response = await
+    cloudinary.v2.uploader.upload(file.path);
     await fs.unlink(file.path);
+    
     return response.secure_url;
 };
