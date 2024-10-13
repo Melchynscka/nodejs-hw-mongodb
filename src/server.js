@@ -7,6 +7,7 @@ import {notFoundHandler} from "./middlewares/notFoundHandler.js";
 import errorHandler from "./middlewares/errorHandler.js";
 import logger from "../src/middlewares/logger.js";
 import { UPLOAD_DIR } from './constants/index.js';
+import  swaggerDocs  from "./middlewares/swaggerDocs.js";
 
 const port = Number(env("PORT", "3001"));
 export const setupServer = () => {
@@ -16,9 +17,8 @@ export const setupServer = () => {
     app.use(express.json());
     app.use(cookieParser());
     app.use('/uploads', express.static(UPLOAD_DIR));
-    // routes
-    // app.use("/auth", authRouter);
-    // app.use("/contacts", contactsRouter);
+    app.use("/api-docs", swaggerDocs());
+    
     app.use(router);
     app.use('*', notFoundHandler);
     app.use(errorHandler);
